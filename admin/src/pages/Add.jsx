@@ -51,7 +51,8 @@ const Add = ({ token }) => {
         setImage3(false);
         setImage4(false);
         setPrice("");
-      } else {
+      } 
+      else {
         toast.error(response.data.message);
       }
     } catch (error) {
@@ -289,7 +290,7 @@ const Add = ({ token }) => {
       </div>
 
       <button
-        className="w-28 py-3 mt-4 bg-black bg-black text-white"
+        className="w-28 py-3 mt-4 bg-black text-white"
         type="submit"
       >
         Add
