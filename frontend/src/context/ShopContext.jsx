@@ -138,6 +138,24 @@ const ShopContextProvider = (props) => {
     }
   };
 
+   const [darkMode, setDarkMode] = useState(() => {
+    return (
+      localStorage.getItem("theme") === "dark" ||
+      (!localStorage.getItem("theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    );
+  });
+ 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
   useEffect(() => {
     getProductsData();
   }, []);
@@ -150,6 +168,8 @@ const ShopContextProvider = (props) => {
   }, []);
 
   const value = {
+    darkMode,
+    setDarkMode,
     products,
     currency,
     delivery_fee,

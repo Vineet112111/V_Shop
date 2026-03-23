@@ -32,5 +32,3 @@ app.listen(port, () => {
   console.log(`Server started on http://localhost:${port} ❤️`);
 });
 
-// smimtiaz58
-// YgDk3SE4kqmRIwjt
