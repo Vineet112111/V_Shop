@@ -19,25 +19,52 @@ const SearchBar = () => {
   }, [location]);
 
   return showSearch && visible ? (
-    <div className="border-t border-b bg-gray-50 text-center">
-      <div className="inline-flex items-center justify-center border border-gray-400 px-5 py-2 my-5 mx-3 rounded-full w-3/4 sm:w-1/2">
-        <input
-          type="text"
-          placeholder="Search"
-          className="flex-1 outline-none bg-inherit text-sm"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+    <div className="w-full border-t border-b 
+      bg-gray-50 dark:bg-zinc-900 
+      border-gray-200 dark:border-zinc-700 
+      transition-all duration-300">
 
-        <img src={assets.search_icon} className="w-4" alt="" />
+      <div className="flex items-center justify-center gap-3 py-5 px-4">
+
+        {/* SEARCH BOX */}
+        <div className="flex items-center w-full sm:w-1/2 
+          bg-white dark:bg-zinc-800
+          border border-gray-300 dark:border-zinc-600
+          rounded-full px-5 py-2 shadow-sm
+          focus-within:ring-2 focus-within:ring-amber-400 transition">
+
+          <input
+            type="text"
+            placeholder="Search for products..."
+            className="flex-1 outline-none bg-transparent 
+              text-sm text-gray-700 dark:text-gray-200 
+              placeholder-gray-400"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          <img
+            src={assets.search_icon}
+            className="w-4 opacity-60 dark:invert"
+            alt=""
+          />
+        </div>
+
+        {/* CLOSE BUTTON */}
+        <button
+          onClick={() => setShowSearch(false)}
+          className="p-2 rounded-full 
+            hover:bg-gray-200 dark:hover:bg-zinc-700 
+            transition"
+        >
+          <img
+            src={assets.cross_icon}
+            className="w-3 opacity-70 dark:invert"
+            alt=""
+          />
+        </button>
+
       </div>
-
-      <img
-        src={assets.cross_icon}
-        className="inline w-3 cursor-pointer"
-        alt=""
-        onClick={() => setShowSearch(false)}
-      />
     </div>
   ) : null;
 };

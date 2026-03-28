@@ -4,7 +4,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl, darkMode } =
+    useContext(ShopContext);
+
   const [currentState, setCurrentState] = useState("Login");
 
   const [name, setName] = useState("");
@@ -13,6 +15,7 @@ const Login = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
     try {
       if (currentState === "Sign Up") {
         const res = await axios.post(backendUrl + "/api/user/register", {
@@ -41,79 +44,104 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
 
   useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
+    if (token) navigate("/");
   }, [token]);
 
   return (
-    <form
-      onSubmit={onSubmitHandler}
-      className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 transition
+        ${
+          darkMode
+            ? "bg-zinc-950 text-white"
+            : "bg-gray-100 text-gray-900"
+        }`}
     >
-      <div className="inline-flex items-center gap-2 mb-2 mt-10">
-        <p className="prata-regular text-3xl">{currentState}</p>
-        <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
-      </div>
+      {/* CARD */}
+      <form
+        onSubmit={onSubmitHandler}
+        className={`w-full max-w-md p-8 rounded-md border space-y-5 transition
+          ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200"
+          }`}
+      >
+        {/* TITLE */}
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold tracking-wide">
+            {currentState}
+          </h2>
+          <div className="w-10 h-[2px] bg-amber-500 mx-auto mt-2"></div>
+        </div>
 
-      {currentState === "Login" ? (
-        ""
-      ) : (
-        <input
-          type="text"
-          className="w-full px-3 py-2 border border-gray-800"
-          placeholder="Name"
-          required
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-      )}
-      <input
-        type="email"
-        className="w-full px-3 py-2 border border-gray-800"
-        placeholder="Email"
-        required
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <input
-        type="password"
-        className="w-full px-3 py-2 border border-gray-800"
-        placeholder="Password"
-        required
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-
-      <div className="w-full flex justify-between text-sm mt-[-8px]">
-        <p className="cursor-pointer">Forgot your password?</p>
-        {currentState === "Login" ? (
-          <p
-            onClick={() => setCurrentState("Sign Up")}
-            className="cursor-pointer"
-          >
-            Create account
-          </p>
-        ) : (
-          <p
-            onClick={() => setCurrentState("Login")}
-            className="cursor-pointer"
-          >
-            Login Here{" "}
-          </p>
+        {/* NAME */}
+        {currentState === "Sign Up" && (
+          <input
+            type="text"
+            placeholder="Full Name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={`input-style ${darkMode && "dark-input"}`}
+          />
         )}
-      </div>
 
-      <button className="bg-black text-white font-light px-8 py-2 mt-4">
-        {currentState === "Login" ? "Sign In" : "Sign Up"}
-      </button>
-    </form>
+        {/* EMAIL */}
+        <input
+          type="email"
+          placeholder="Email Address"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`input-style ${darkMode && "dark-input"}`}
+        />
+
+        {/* PASSWORD */}
+        <input
+          type="password"
+          placeholder="Password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={`input-style ${darkMode && "dark-input"}`}
+        />
+
+        {/* LINKS */}
+        <div className="flex justify-between text-sm">
+          <p className="cursor-pointer text-zinc-400 hover:text-amber-500 transition">
+            Forgot password?
+          </p>
+
+          {currentState === "Login" ? (
+            <p
+              onClick={() => setCurrentState("Sign Up")}
+              className="cursor-pointer text-amber-500 hover:underline"
+            >
+              Create account
+            </p>
+          ) : (
+            <p
+              onClick={() => setCurrentState("Login")}
+              className="cursor-pointer text-amber-500 hover:underline"
+            >
+              Login here
+            </p>
+          )}
+        </div>
+
+        {/* BUTTON */}
+        <button
+          className="w-full py-3 rounded-md bg-amber-500 hover:bg-amber-600 text-white transition font-medium"
+        >
+          {currentState === "Login" ? "Sign In" : "Create Account"}
+        </button>
+      </form>
+    </div>
   );
 };
 

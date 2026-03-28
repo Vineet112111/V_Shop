@@ -106,7 +106,7 @@ const Collection = () => {
 
         {/* CATEGORY */}
         <div
-          className={`rounded-md p-4 mt-4 border ${
+          className={`rounded-md p-4 mt-4 border  ${
             showFilter ? "" : "hidden"
           } sm:block ${
             darkMode
@@ -182,7 +182,7 @@ const Collection = () => {
         </div>
 
         {/* PRODUCTS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-5">
 
           {filterProducts.map((item, i) => (
             <div

@@ -6,77 +6,117 @@ import RelatedProduct from "../components/RelatedProduct";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, cartItems, addToCart } = useContext(ShopContext);
+
+  const { products, currency, addToCart, darkMode } =
+    useContext(ShopContext);
+
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
 
-  const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-
-        return null;
-      }
-    });
-  };
-
   useEffect(() => {
-    fetchProductData();
-  }, [productId]);
+    const item = products.find((p) => p._id === productId);
+    if (item) {
+      setProductData(item);
+      setImage(item.image[0]);
+    }
+  }, [productId, products]);
 
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
-      {/* PRODUCT DATA */}
-      <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        {/* PRODUCT IMAGES */}
+    <div
+      className={`py-10 px-4 sm:px-6 transition
+        ${darkMode ? "bg-zinc-950 text-white" : "bg-gray-100 text-gray-900"}
+      `}
+    >
+      {/* MAIN SECTION */}
+      <div className="flex flex-col lg:flex-row gap-10">
 
-        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+        {/* IMAGES */}
+        <div className="flex-1 flex flex-col-reverse sm:flex-row gap-4">
+
+          {/* THUMBNAILS */}
+          <div className="flex sm:flex-col gap-2 overflow-x-auto sm:overflow-y-auto sm:w-[20%]">
             {productData.image.map((item, i) => (
               <img
-                src={item}
                 key={i}
-                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
-                alt=""
+                src={item}
                 onClick={() => setImage(item)}
+                className={`w-20 h-20 object-cover rounded cursor-pointer border transition
+                  ${
+                    image === item
+                      ? "border-amber-500"
+                      : darkMode
+                      ? "border-zinc-700"
+                      : "border-gray-300"
+                  }`}
               />
             ))}
           </div>
-          <div className="w-full sm:w-[80%]">
-            <img src={image} className="w-full h-auto" alt="" />
+
+          {/* MAIN IMAGE */}
+          <div
+            className={`w-full sm:w-[80%] rounded-md overflow-hidden border
+              ${
+                darkMode
+                  ? "border-zinc-700 bg-zinc-900"
+                  : "border-gray-200 bg-white"
+              }`}
+          >
+            <img
+              src={image}
+              className="w-full h-[400px] sm:h-[500px] object-cover hover:scale-105 transition duration-300"
+              alt=""
+            />
           </div>
         </div>
 
         {/* PRODUCT INFO */}
-        <div className="flex-1 ">
-          <h1 className="font-medium text-2xl my-2">{productData.name}</h1>
-          <div className="flex items-center gap-1 mt-2">
-            <img className="w-3.5" src={assets.star_icon} alt="" />
-            <img className="w-3.5" src={assets.star_icon} alt="" />
-            <img className="w-3.5" src={assets.star_icon} alt="" />
-            <img className="w-3.5" src={assets.star_icon} alt="" />
-            <img className="w-3.5" src={assets.star_dull_icon} alt="" />
-            <p className="pl-2">(122)</p>
+        <div className="flex-1 flex flex-col gap-4">
+
+          <h1 className="text-2xl sm:text-3xl font-semibold">
+            {productData.name}
+          </h1>
+
+          {/* RATING */}
+          <div className="flex items-center gap-1 text-sm">
+            {[...Array(4)].map((_, i) => (
+              <img key={i} className="w-4" src={assets.star_icon} />
+            ))}
+            <img className="w-4" src={assets.star_dull_icon} />
+            <span className="ml-2 text-zinc-400">(122 reviews)</span>
           </div>
-          <p className="mt-5 text-3xl font-medium">
+
+          {/* PRICE */}
+          <p className="text-3xl font-bold text-amber-500">
             {currency}
             {productData.price}
           </p>
-          <p className="mt-5 text-gray-500 md:w-4/5">
+
+          {/* DESCRIPTION */}
+          <p
+            className={`text-sm leading-relaxed max-w-lg
+              ${darkMode ? "text-zinc-400" : "text-gray-600"}
+            `}
+          >
             {productData.description}
           </p>
-          <div className="flex flex-col gap-4 my-8">
-            <p>Select Size</p>
+
+          {/* SIZE */}
+          <div>
+            <p className="mb-2 font-medium">Select Size</p>
             <div className="flex gap-2">
               {productData.sizes.map((item, i) => (
                 <button
-                  className={`border py-2 px-4 bg-gray-100 ${
-                    item === size ? "border-orange-500" : ""
-                  }`}
                   key={i}
                   onClick={() => setSize(item)}
+                  className={`px-4 py-2 text-sm rounded border transition
+                    ${
+                      item === size
+                        ? "bg-amber-500 text-white border-amber-500"
+                        : darkMode
+                        ? "bg-zinc-800 border-zinc-600 hover:bg-zinc-700"
+                        : "bg-gray-100 border-gray-300 hover:bg-gray-200"
+                    }`}
                 >
                   {item}
                 </button>
@@ -84,51 +124,74 @@ const Product = () => {
             </div>
           </div>
 
+          {/* ADD TO CART */}
           <button
-            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
             onClick={() => addToCart(productData._id, size)}
+            className="mt-4 px-8 py-3 rounded-md bg-amber-500 hover:bg-amber-600 text-white transition"
           >
             ADD TO CART
           </button>
-          <hr className="mt-8 sm:w-4/5" />
 
-          <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            <p>100% Original Product.</p>
-            <p>Cash o delivery is available on this product.</p>
-            <p>Easy return and exchange policy within 7 days.</p>
+          {/* EXTRA INFO */}
+          <div
+            className={`text-sm mt-6 space-y-1
+              ${darkMode ? "text-zinc-400" : "text-gray-600"}
+            `}
+          >
+            <p>✔ 100% Original Product</p>
+            <p>✔ Cash on delivery available</p>
+            <p>✔ 7 days easy return & exchange</p>
           </div>
         </div>
       </div>
 
-      {/* DESCRIPTION AND REVIEW SECTION */}
-      <div className="mt-20">
-        <div className="flex">
-          <b className="border px-5 py-3 text-sm ">Description</b>
-          <p className="border px-5 py-3 text-sm ">Reviews (122)</p>
+      {/* DESCRIPTION SECTION */}
+      <div className="mt-16">
+        <div className="flex gap-2">
+          <button
+            className={`px-5 py-2 text-sm border rounded-t
+              ${
+                darkMode
+                  ? "bg-zinc-900 border-zinc-700"
+                  : "bg-white border-gray-300"
+              }`}
+          >
+            Description
+          </button>
+          <button
+            className={`px-5 py-2 text-sm border rounded-t
+              ${
+                darkMode
+                  ? "border-zinc-700 text-zinc-400"
+                  : "border-gray-300 text-gray-500"
+              }`}
+          >
+            Reviews (122)
+          </button>
         </div>
-        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
+
+        <div
+          className={`p-5 border rounded-b text-sm
+            ${
+              darkMode
+                ? "bg-zinc-900 border-zinc-700 text-zinc-400"
+                : "bg-white border-gray-200 text-gray-600"
+            }`}
+        >
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-            dolor, consequuntur totam nostrum praesentium distinctio accusamus
-            assumenda architecto alias veritatis autem. Non facilis alias
-            quaerat quasi cumque nisi. Suscipit cupiditate perspiciatis
-            laudantium error quibusdam facere, praesentium delectus cum rerum
-            tempore laboriosam temporibus. Id voluptatibus quia, optio provident
-            nesciunt debitis. Harum!
-          </p>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui quos
-            deleniti corrupti dolore commodi deserunt, dicta ipsam ex nemo
-            animi.
+            Premium quality product designed for comfort and durability. Perfect
+            for everyday wear with modern styling.
           </p>
         </div>
       </div>
 
-      {/* DISPLAY RELATED PRODUCTS */}
-      <RelatedProduct
-        category={productData.category}
-        subCategory={productData.subCategory}
-      />
+      {/* RELATED PRODUCTS */}
+      <div className="mt-16 mb-5">
+        <RelatedProduct
+          category={productData.category}
+          subCategory={productData.subCategory}
+        />
+      </div>
     </div>
   ) : (
     <div className="opacity-0"></div>

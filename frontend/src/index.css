@@ -28,3 +28,21 @@ a.active hr {
     color: white;
   }
 }
+
+
+
+.input-style {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  background: white;
+  color: black;
+}
+
+.dark-input {
+  background: #18181b;
+  color: white;
+  border: 1px solid #3f3f46;
+}

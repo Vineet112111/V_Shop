@@ -5,8 +5,14 @@ import { assets } from "../assets/assets";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } =
-    useContext(ShopContext);
+  const {
+    products,
+    currency,
+    cartItems,
+    updateQuantity,
+    navigate,
+    darkMode, // ✅ context
+  } = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -29,12 +35,21 @@ const Cart = () => {
   }, [cartItems, products]);
 
   return (
-    <div className="border-t pt-14">
-      <div className="text-2xl mb-3">
+    <div
+      className={`py-14 px-4 sm:px-6 min-h-screen transition
+        ${
+          darkMode
+            ? "bg-zinc-950 text-white border-zinc-800"
+            : "bg-gray-100 text-gray-900 border-gray-300"
+        }`}
+    >
+      {/* TITLE */}
+      <div className="text-2xl mb-6">
         <Title text1={"YOUR"} text2={"CART"} />
       </div>
 
-      <div>
+      {/* CART ITEMS */}
+      <div className="space-y-4">
         {cartData.map((item, i) => {
           const productsData = products.find(
             (product) => product._id === item._id
@@ -42,33 +57,51 @@ const Cart = () => {
 
           return (
             <div
-              className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
               key={i}
+              className={`grid grid-cols-[4fr_1fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 p-4 rounded-md border transition
+                ${
+                  darkMode
+                    ? "bg-zinc-900 border-zinc-700"
+                    : "bg-white border-gray-200"
+                }`}
             >
-              <div className="flex items-start gap-6">
-                <img
-                  src={productsData.image[0]}
-                  className="w-16 sm:w-20"
-                  alt=""
-                />
+              {/* LEFT */}
+              <div className="flex items-start gap-5">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-md bg-gray-100">
+                  <img
+                    src={productsData.image[0]}
+                    className="w-full h-full object-cover"
+                    alt=""
+                  />
+                </div>
+
                 <div>
-                  <p className="text-xs sm:text-lg font-medium">
+                  <p className="text-sm sm:text-lg font-medium">
                     {productsData.name}
                   </p>
-                  <div className="flex items-center gap-5 mt-2">
+
+                  <div className="flex items-center gap-4 mt-2 text-sm">
                     <p>
                       {currency}
                       {productsData.price}
                     </p>
-                    <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
+
+                    <span
+                      className={`px-2 py-0.5 rounded text-xs border
+                        ${
+                          darkMode
+                            ? "bg-zinc-800 border-zinc-600"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
+                    >
                       {item.size}
-                    </p>
+                    </span>
                   </div>
                 </div>
               </div>
 
+              {/* QUANTITY */}
               <input
-                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
                 type="number"
                 min={1}
                 defaultValue={item.quantity}
@@ -81,10 +114,18 @@ const Cart = () => {
                         Number(e.target.value)
                       )
                 }
+                className={`w-14 sm:w-20 px-2 py-1 rounded border outline-none
+                  ${
+                    darkMode
+                      ? "bg-zinc-800 border-zinc-600 text-white"
+                      : "bg-white border-gray-300 text-black"
+                  }`}
               />
+
+              {/* DELETE */}
               <img
                 src={assets.bin_icon}
-                className="w-4 mr-4 sm:w-5 cursor-pointer"
+                className="w-4 sm:w-5 cursor-pointer hover:scale-110 transition"
                 alt=""
                 onClick={() => updateQuantity(item._id, item.size, 0)}
               />
@@ -93,19 +134,41 @@ const Cart = () => {
         })}
       </div>
 
-      <div className="flex justify-end my-20">
-        <div className="w-full sm:w-[450px]">
-          <CartTotal />
-          <div className="w-full text-end">
-            <button
-              className="bg-black text-white text-sm my-8 px-8 py-3"
-              onClick={() => navigate("/place-order")}
+      {/* EMPTY STATE */}
+      {cartData.length === 0 && (
+        <div className="text-center py-20 text-zinc-400">
+          🛒 Your cart is empty
+        </div>
+      )}
+
+      {/* CART TOTAL */}
+      {cartData.length > 0 && (
+        <div className="flex justify-end my-16">
+          <div className="w-full sm:w-[420px] space-y-4">
+
+            <div
+              className={`p-5 rounded-md border
+                ${
+                  darkMode
+                    ? "bg-zinc-900 border-zinc-700"
+                    : "bg-white border-gray-200"
+                }`}
             >
-              PROCEED TO CHECKOUT
-            </button>
+              <CartTotal />
+            </div>
+
+            <div className="text-end">
+              <button
+                onClick={() => navigate("/place-order")}
+                className="px-8 py-3 text-sm rounded-md bg-amber-500 hover:bg-amber-600 text-white transition"
+              >
+                PROCEED TO CHECKOUT
+              </button>
+            </div>
+
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

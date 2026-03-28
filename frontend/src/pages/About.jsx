@@ -23,7 +23,7 @@ const About = () => {
       </div>
 
       {/* ABOUT SECTION */}
-      <div className="my-12 flex flex-col md:flex-row gap-12 items-center">
+      <div className="my-12 flex flex-col md:flex-row gap-12  justify-center items-center">
 
         {/* IMAGE */}
         <img
@@ -58,9 +58,7 @@ const About = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
             eius officia fugit sequi libero possimus temporibus commodi.
           </p>
-
         </div>
-
       </div>
 
       {/* WHY CHOOSE US */}

@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import Home from "./pages/Home";
 import Collection from "./pages/Collection";
 import About from "./pages/About";
@@ -10,17 +11,24 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import PlaceOrder from "./pages/PlaceOrder";
 import Orders from "./pages/Orders";
+import Verify from "./pages/Verify";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Verify from "./pages/Verify";
 import SearchBar from "./components/SearchBar";
 
 const App = () => {
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ">
+    <div className="w-full">
       <ToastContainer />
-      <Navbar />
-      <SearchBar />
+
+      {/* NAVBAR WITH PADDING */}
+      <div>
+        <Navbar />
+        <SearchBar />
+      </div>
+
+      {/* ROUTES FULL WIDTH */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
@@ -33,7 +41,11 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/verify" element={<Verify />} />
       </Routes>
-      <Footer />
+
+      {/* FOOTER WITH PADDING */}
+      <div >
+        <Footer />
+      </div>
     </div>
   );
 };

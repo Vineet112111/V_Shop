@@ -23,7 +23,7 @@ const Contact = () => {
       </div>
 
       {/* MAIN SECTION */}
-      <div className="my-12 flex flex-col md:flex-row gap-12 items-center">
+      <div className="my-12 flex flex-col md:flex-row gap-12 justify-center items-center">
 
         {/* IMAGE */}
         <img

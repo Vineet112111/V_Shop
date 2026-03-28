@@ -16,9 +16,11 @@ const PlaceOrder = () => {
     backendUrl,
     token,
     setCartItems,
+    darkMode, // ✅ USING CONTEXT
   } = useContext(ShopContext);
 
   const [method, setMethod] = useState("cod");
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,9 +34,7 @@ const PlaceOrder = () => {
   });
 
   const onChangeHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
+    const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
 
@@ -66,43 +66,21 @@ const PlaceOrder = () => {
         amount: getCartAmount() + delivery_fee,
       };
 
-      switch (method) {
-        //API CALLS FOR COF
-        case "cod":
-          const res = await axios.post(
-            backendUrl + "/api/order/place",
-            orderData,
-            { headers: { token } }
-          );
-          if (res.data.success) {
-            setCartItems({});
-            navigate("/orders");
-          } else {
-            toast.error(res.data.message);
-          }
-          break;
+      if (method === "cod") {
+        const res = await axios.post(
+          backendUrl + "/api/order/place",
+          orderData,
+          { headers: { token } }
+        );
 
-        case "stripe":
-          const responseStripe = await axios.post(
-            backendUrl + "/api/order/stripe",
-            orderData,
-            { headers: { token } }
-          );
-
-          if (responseStripe.data.success) {
-            const { session_url } = responseStripe.data;
-            window.location.replace(session_url);
-          } else {
-            toast.error(responseStripe.data.message);
-          }
-
-          break;
-
-        default:
-          break;
+        if (res.data.success) {
+          setCartItems({});
+          navigate("/orders");
+        } else {
+          toast.error(res.data.message);
+        }
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -110,157 +88,123 @@ const PlaceOrder = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t"
+      className={`flex flex-col lg:flex-row gap-8 pt-10 px-4 sm:px-6 min-h-[80vh] border-t transition
+        ${
+          darkMode
+            ? "bg-zinc-950 text-white border-zinc-800"
+            : "bg-gray-100 text-gray-900 border-gray-300"
+        }`}
     >
-      {/* LEST SIDE */}
-      <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
+      {/* LEFT SIDE */}
+      <div
+        className={`flex flex-col gap-4 w-full lg:max-w-[480px] p-5 rounded-md border
+        ${
+          darkMode
+            ? "bg-zinc-900 border-zinc-700"
+            : "bg-white border-gray-200"
+        }`}
+      >
+        <div className="text-xl sm:text-2xl mb-2">
           <Title text1={"DELIVERY"} text2={"INFORMATION"} />
         </div>
+
         <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="First name"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="firstName"
-            value={formData.firstName}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last name"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="lastName"
-            value={formData.lastName}
-            required
-          />
+          <input type="text" name="firstName" placeholder="First name"
+            value={formData.firstName} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} required />
+          <input type="text" name="lastName" placeholder="Last name"
+            value={formData.lastName} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} required />
         </div>
 
-        <input
-          type="email"
-          placeholder="Email address"
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          onChange={onChangeHandler}
-          name="email"
-          value={formData.email}
-          required
-        />
+        <input type="email" name="email" placeholder="Email"
+          value={formData.email} onChange={onChangeHandler}
+          className={`input-style ${darkMode && "dark-input"}`} required />
 
-        <input
-          type="text"
-          placeholder="Street"
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          onChange={onChangeHandler}
-          name="street"
-          value={formData.street}
-          required
-        />
+        <input type="text" name="street" placeholder="Street"
+          value={formData.street} onChange={onChangeHandler}
+          className={`input-style ${darkMode && "dark-input"}`} required />
 
         <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="City"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="city"
-            value={formData.city}
-            required
-          />
-          <input
-            type="text"
-            placeholder="State"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="state"
-            value={formData.state}
-            required
-          />
+          <input name="city" placeholder="City"
+            value={formData.city} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} />
+          <input name="state" placeholder="State"
+            value={formData.state} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} />
         </div>
 
         <div className="flex gap-3">
-          <input
-            type="number"
-            placeholder="Zipcode"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="zipcode"
-            value={formData.zipcode}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Country"
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-            onChange={onChangeHandler}
-            name="country"
-            value={formData.country}
-            required
-          />
+          <input name="zipcode" placeholder="Zipcode"
+            value={formData.zipcode} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} />
+          <input name="country" placeholder="Country"
+            value={formData.country} onChange={onChangeHandler}
+            className={`input-style ${darkMode && "dark-input"}`} />
         </div>
-        <input
-          type="number"
-          placeholder="Phone"
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
-          onChange={onChangeHandler}
-          name="phone"
-          value={formData.phone}
-          required
-        />
+
+        <input name="phone" placeholder="Phone"
+          value={formData.phone} onChange={onChangeHandler}
+          className={`input-style ${darkMode && "dark-input"}`} />
       </div>
 
       {/* RIGHT SIDE */}
+      <div className="flex-1">
 
-      <div className="mt-8">
-        <div className="mt-8 min-w-80">
+        {/* CART */}
+        <div
+          className={`p-5 rounded-md border mb-6 ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200"
+          }`}
+        >
           <CartTotal />
         </div>
-        <div className="mt-12">
+
+        {/* PAYMENT */}
+        <div
+          className={`p-5 rounded-md border ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200"
+          }`}
+        >
           <Title text1={"PAYMENT"} text2={"METHOD"} />
 
-          {/* PAYMENT METHOD SELECTION */}
-          <div className="flex gap-3 flex-col lg:flex-row">
-            <div
-              onClick={() => setMethod("stripe")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "stripe" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <img src={assets.stripe_logo} className="h-5 mx-4" alt="" />
-            </div>
-            <div
-              onClick={() => setMethod("razorpay")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "razorpay" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <img src={assets.razorpay_logo} className="h-5 mx-4" alt="" />
-            </div>
-            <div
-              onClick={() => setMethod("cod")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "cod" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-500 text-sm font-medium mx-4">
-                CASH ON DELIVERY
-              </p>
-            </div>
+          <div className="flex flex-col gap-3 mt-4">
+            {["stripe", "razorpay", "cod"].map((m) => (
+              <div
+                key={m}
+                onClick={() => setMethod(m)}
+                className={`flex items-center justify-between p-3 rounded-md border cursor-pointer transition
+                  ${
+                    method === m
+                      ? "border-amber-500"
+                      : darkMode
+                      ? "border-zinc-700"
+                      : "border-gray-300"
+                  }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`w-3 h-3 rounded-full border ${method === m ? "bg-green-400" : ""}`}></span>
+
+                  {m === "cod" ? (
+                    <p>CASH ON DELIVERY</p>
+                  ) : (
+                    <img
+                      src={m === "stripe" ? assets.stripe_logo : assets.razorpay_logo}
+                      className="h-5"
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="w-full text-end mt-8">
+          <div className="text-end mt-6">
             <button
-              className="bg-black text-white px-16 py-3 text-sm"
+              className="px-10 py-3 text-sm rounded-md bg-amber-500 hover:bg-amber-600 text-white transition"
               type="submit"
             >
               PLACE ORDER
