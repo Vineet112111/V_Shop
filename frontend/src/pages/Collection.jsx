@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
-  const { products, search, showSearch } = useContext(ShopContext);
+  const { products, search, showSearch, darkMode } = useContext(ShopContext);
 
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
@@ -20,7 +20,7 @@ const Collection = () => {
       setCategory((p) => [...p, e.target.value]);
     }
   };
-  
+
   const toggleSubCategory = (e) => {
     if (subCategory.includes(e.target.value)) {
       setSubCategory((p) => p.filter((item) => item !== e.target.value));
@@ -80,127 +80,132 @@ const Collection = () => {
   }, [sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
+    <div
+      className={`flex flex-col sm:flex-row gap-6 sm:gap-10 pt-10 px-4 sm:px-6 border-t transition-colors duration-300 ${
+        darkMode
+          ? "bg-zinc-950 text-white border-zinc-800"
+          : "bg-gray-100 text-gray-900 border-gray-300"
+      }`}
+    >
+
       {/* FILTER OPTIONS */}
       <div className="min-w-60">
+
         <p
           onClick={() => setShowFilter(!showFilter)}
-          className="my-2 text-xl flex items-center cursor-pointer gap-2"
+          className="my-2 text-lg font-medium flex items-center cursor-pointer gap-2"
         >
           FILTERS
           <img
             src={assets.dropdown_icon}
-            className={`h-3 sm:hidden ${showFilter ? "rotate-90" : ""}`}
-            alt=""
+            className={`h-3 sm:hidden ${showFilter ? "rotate-90" : ""} ${
+              darkMode ? "invert" : ""
+            }`}
           />
         </p>
-        {/* 
-        CATEGORY FILTER */}
+
+        {/* CATEGORY */}
         <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 ${
-            showFilter ? " " : "hidden"
-          } sm:block`}
+          className={`rounded-md p-4 mt-4 border ${
+            showFilter ? "" : "hidden"
+          } sm:block ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-300"
+          }`}
         >
-          <p className="mb-3 text-sm font-medium">CATEGORIES</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Men"}
-                onChange={toggleCategory}
-              />{" "}
-              Men
-            </p>
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Women"}
-                onChange={toggleCategory}
-              />{" "}
-              Women
-            </p>
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Kids"}
-                onChange={toggleCategory}
-              />{" "}
-              Kids
-            </p>
+          <p className="mb-3 text-sm font-semibold">CATEGORIES</p>
+
+          <div className="flex flex-col gap-2 text-sm">
+            {["Men", "Women", "Kids"].map((item) => (
+              <label key={item} className="flex gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  value={item}
+                  onChange={toggleCategory}
+                />
+                {item}
+              </label>
+            ))}
           </div>
         </div>
 
-        {/* SUBCATEGORIES FILTER */}
+        {/* SUBCATEGORY */}
         <div
-          className={`border border-gray-300 pl-5 py-3 my-5 ${
-            showFilter ? " " : "hidden"
-          } sm:block`}
+          className={`rounded-md p-4 mt-5 border ${
+            showFilter ? "" : "hidden"
+          } sm:block ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-300"
+          }`}
         >
-          <p className="mb-3 text-sm font-medium">TYPE</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Topwear"}
-                onChange={toggleSubCategory}
-              />{" "}
-              Topwear
-            </p>
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Bottomwear"}
-                onChange={toggleSubCategory}
-              />{" "}
-              Bottomwear
-            </p>
-            <p className="flex gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                value={"Winterwear"}
-                onChange={toggleSubCategory}
-              />{" "}
-              Winterwear
-            </p>
+          <p className="mb-3 text-sm font-semibold">TYPE</p>
+
+          <div className="flex flex-col gap-2 text-sm">
+            {["Topwear", "Bottomwear", "Winterwear"].map((item) => (
+              <label key={item} className="flex gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  value={item}
+                  onChange={toggleSubCategory}
+                />
+                {item}
+              </label>
+            ))}
           </div>
         </div>
+
       </div>
 
       {/* RIGHT SIDE */}
       <div className="flex-1">
-        <div className="flex justify-between text-base sm:text-2xl mb-4">
+
+        <div className="flex justify-between items-center mb-5">
+
           <Title text1={"ALL"} text2={"COLLECTIONS"} />
 
-          {/* PRODUCT SORT */}
+          {/* SORT */}
           <select
             onChange={(e) => setSortType(e.target.value)}
-            className="border-2 border-gray-300 text-sm px-2"
+            className={`px-3 py-1 text-sm border rounded ${
+              darkMode
+                ? "bg-zinc-900 border-zinc-700 text-white"
+                : "bg-white border-gray-300 text-gray-700"
+            }`}
           >
             <option value="relevant">Sort by: Relevant</option>
-            <option value="low-high">Sort by: Low to High</option>
-            <option value="high-low">Sort by: High to Low</option>
+            <option value="low-high">Low to High</option>
+            <option value="high-low">High to Low</option>
           </select>
+
         </div>
 
-        {/* MAP PRODUCTS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        {/* PRODUCTS */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+
           {filterProducts.map((item, i) => (
-            <ProductItem
+            <div
               key={i}
-              id={item._id}
-              image={item.image}
-              name={item.name}
-              price={item.price}
-            />
+              className={`rounded-md overflow-hidden border ${
+                darkMode
+                  ? "bg-zinc-900 border-zinc-700"
+                  : "bg-white border-gray-200"
+              }`}
+            >
+              <ProductItem
+                id={item._id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+              />
+            </div>
           ))}
+
         </div>
+
       </div>
+
     </div>
   );
 };

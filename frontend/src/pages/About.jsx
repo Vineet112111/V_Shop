@@ -1,73 +1,132 @@
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
-
 import { assets } from "../assets/assets";
 import NewsletterBox from "../components/NewsletterBox";
 
 const About = () => {
+
+  const { darkMode } = useContext(ShopContext);
+
   return (
-    <div>
-      <div className="text-2xl text-center pt-8 border-t">
+    <div
+      className={`px-4 sm:px-6 transition-colors duration-300 ${
+        darkMode
+          ? "bg-zinc-950 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
+
+      {/* HEADER */}
+      <div className="text-2xl text-center pt-8 border-t border-zinc-300 dark:border-zinc-800">
         <Title text1={"ABOUT"} text2={"US"} />
       </div>
 
-      <div className="my-10 flex flex-col md:flex-row gap-16">
+      {/* ABOUT SECTION */}
+      <div className="my-12 flex flex-col md:flex-row gap-12 items-center">
+
+        {/* IMAGE */}
         <img
           src={assets.about_img}
-          className="w-full md:max-w-[450px]"
+          className="w-full md:max-w-[450px] rounded-md shadow-md"
           alt=""
         />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600">
+
+        {/* TEXT */}
+        <div
+          className={`flex flex-col justify-center gap-5 md:w-2/4 ${
+            darkMode ? "text-zinc-400" : "text-gray-600"
+          }`}
+        >
+
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
             quidem culpa sapiente necessitatibus similique, quaerat nisi fugiat
-            at officiis tempora laboriosam ipsam iusto? Veritatis illum ipsum
-            nihil delectus deserunt voluptates, officia nemo nulla aspernatur
-            laboriosam.
+            at officiis tempora laboriosam ipsam iusto.
           </p>
+
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta a
-            doloremque vitae consectetur, quas earum voluptatum nobis itaque
-            veritatis, ut ipsam eius sed ab fugiat.
+            doloremque vitae consectetur, quas earum voluptatum nobis itaque.
           </p>
 
-          <b className="text-gray-800">Our Mission</b>
+          <b className={darkMode ? "text-white" : "text-gray-800"}>
+            Our Mission
+          </b>
+
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-            eius officia fugit sequi libero possimus temporibus commodi
-            doloremque omnis saepe.
+            eius officia fugit sequi libero possimus temporibus commodi.
           </p>
+
         </div>
+
       </div>
 
-      <div className="text-xl py-4">
+      {/* WHY CHOOSE US */}
+      <div className="text-xl py-6 text-center">
         <Title text1={"WHY"} text2={"CHOOSE US"} />
       </div>
 
-      <div className="flex flex-col md:flex-row text-sm mb-20">
-        <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
+      {/* CARDS */}
+      <div className="flex flex-col md:flex-row gap-6 mb-20">
+
+        {/* CARD 1 */}
+        <div
+          className={`flex-1 p-6 md:p-10 rounded-md border transition ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200 hover:shadow-md"
+          }`}
+        >
           <b>Quality Assurance:</b>
-          <p className="text-gray-600">
+          <p className={`mt-2 ${
+            darkMode ? "text-zinc-400" : "text-gray-600"
+          }`}>
             We meticulously select and vet each product to ensure it meets our
             stringent quality standard.
           </p>
         </div>
-        <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
+
+        {/* CARD 2 */}
+        <div
+          className={`flex-1 p-6 md:p-10 rounded-md border transition ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200 hover:shadow-md"
+          }`}
+        >
           <b>Convenience:</b>
-          <p className="text-gray-600">
+          <p className={`mt-2 ${
+            darkMode ? "text-zinc-400" : "text-gray-600"
+          }`}>
             With our user-friendly interface and hassle-free ordering process,
-            shopping fas never been easier.
+            shopping has never been easier.
           </p>
         </div>
-        <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
+
+        {/* CARD 3 */}
+        <div
+          className={`flex-1 p-6 md:p-10 rounded-md border transition ${
+            darkMode
+              ? "bg-zinc-900 border-zinc-700"
+              : "bg-white border-gray-200 hover:shadow-md"
+          }`}
+        >
           <b>Exceptional Customer Service:</b>
-          <p className="text-gray-600">
-            Our team of dedicated professionals is here to assist you the way,
-            ensuring your satisfaction is our top priority
+          <p className={`mt-2 ${
+            darkMode ? "text-zinc-400" : "text-gray-600"
+          }`}>
+            Our team of dedicated professionals is here to assist you anytime,
+            ensuring your satisfaction is our top priority.
           </p>
         </div>
+
       </div>
 
+      {/* NEWSLETTER */}
       <NewsletterBox />
+
     </div>
   );
 };
