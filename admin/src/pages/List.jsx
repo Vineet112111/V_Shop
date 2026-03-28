@@ -1,9 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { backendUrl, currency } from "../App";
 import { toast } from "react-toastify";
+import { ThemeContext } from "../context/ThemeContext";
 
 const List = ({ token }) => {
+  const { theme } = useContext(ThemeContext);
+
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
@@ -30,7 +33,7 @@ const List = ({ token }) => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        await fetchList();
+        fetchList();
       } else {
         toast.error(response.data.message);
       }
@@ -45,42 +48,75 @@ const List = ({ token }) => {
   }, []);
 
   return (
-    <>
-      <p className="mb-2">All Products Lists</p>
-      <div className="flex flex-col gap-2">
-        {/* LIST TABLE TITLE */}
+    <div className="w-full">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+        All Products
+      </h2>
 
-        <div className="hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border text-sm bg-gray-100">
-          <b>Image</b>
-          <b>Name</b>
-          <b>Category</b>
-          <b>Price</b>
-          <b className="text-center">Action</b>
+      <div
+        className="rounded-xl overflow-hidden
+        border border-gray-200 dark:border-zinc-700
+        bg-white dark:bg-zinc-900
+        transition-colors duration-300"
+      >
+        {/* HEADER */}
+        <div className="hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] 
+          items-center px-4 py-3 text-sm font-medium
+          bg-gray-100 dark:bg-zinc-800
+          text-gray-700 dark:text-gray-300"
+        >
+          <p>Image</p>
+          <p>Name</p>
+          <p>Category</p>
+          <p>Price</p>
+          <p className="text-center">Action</p>
         </div>
 
-        {/* PRODUCT LIST */}
+        {/* LIST */}
         {list.map((item, i) => (
           <div
             key={i}
-            className="grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-1 px-2 border text-sm"
+            className="grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr]
+            items-center gap-3 px-4 py-3 text-sm
+            border-t border-gray-200 dark:border-zinc-700
+            text-gray-700 dark:text-gray-300
+            hover:bg-gray-50 dark:hover:bg-zinc-800
+            transition"
           >
-            <img className="w-12 " src={item.image[0]} alt="" />
-            <p>{item.name}</p>
-            <p>{item.category}</p>
-            <p>
+            {/* IMAGE */}
+            <img
+              className="w-12 h-12 object-cover rounded-md border dark:border-zinc-600"
+              src={item.image[0]}
+              alt=""
+            />
+
+            {/* NAME */}
+            <p className="font-medium">{item.name}</p>
+
+            {/* CATEGORY */}
+            <p className="hidden md:block">{item.category}</p>
+
+            {/* PRICE */}
+            <p className="hidden md:block">
               {currency}
               {item.price}
             </p>
-            <p
+
+            {/* DELETE */}
+            <button
               onClick={() => removeProduct(item._id)}
-              className="text-right md:text-center cursor-pointer text-lg"
+              className="text-center text-xs px-3 py-1 rounded-md
+              bg-red-100 text-red-600
+              dark:bg-red-500/20 dark:text-red-400
+              hover:bg-red-200 dark:hover:bg-red-500/30
+              transition"
             >
-              X
-            </p>
+              Delete
+            </button>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

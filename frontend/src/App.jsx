@@ -12,6 +12,13 @@ import Login from "./pages/Login";
 import PlaceOrder from "./pages/PlaceOrder";
 import Orders from "./pages/Orders";
 import Verify from "./pages/Verify";
+import Career from "./pages/Career";
+import HelpCenter from "./pages/HelpCenter";
+import Privacy from "./pages/Privacy";
+import Returns from "./pages/Return";
+import Shipping from "./pages/ShippingPage";
+
+
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -26,6 +33,7 @@ const App = () => {
       <div>
         <Navbar />
         <SearchBar />
+
       </div>
 
       {/* ROUTES FULL WIDTH */}
@@ -40,6 +48,11 @@ const App = () => {
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/career" element={<Career />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/shipping" element={<Shipping />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
 
       {/* FOOTER WITH PADDING */}

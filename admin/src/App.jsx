@@ -14,7 +14,7 @@ export const currency = "$";
 
 const App = () => {
   const [token, setToken] = useState(
-    localStorage.getItem("token") ? localStorage.getItem("token") : ""
+    localStorage.getItem("token") || ""
   );
 
   useEffect(() => {
@@ -22,17 +22,27 @@ const App = () => {
   }, [token]);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div
+      className="
+      min-h-screen
+      bg-gray-50 dark:bg-zinc-950
+      text-gray-700 dark:text-gray-200
+      transition-colors duration-300
+    "
+    >
       <ToastContainer />
+
       {token === "" ? (
         <Login setToken={setToken} />
       ) : (
         <>
           <Navbar setToken={setToken} />
-          <hr />
+          <hr className="border-gray-200 dark:border-zinc-700" />
+
           <div className="flex w-full">
             <SideBar />
-            <div className="w-[70%] mx-auto ml-[max(5vw, 25px)], my-8 text-gray-600 text-base">
+
+            <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 dark:text-gray-300 text-base">
               <Routes>
                 <Route path="/add" element={<Add token={token} />} />
                 <Route path="/list" element={<List token={token} />} />

@@ -1,162 +1,112 @@
-import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 
 const Footer = () => {
-
   const { darkMode } = useContext(ShopContext);
 
   return (
     <div
       className={`
-        transition-colors duration-300
+        transition-all duration-300
         ${darkMode
-          ? "bg-zinc-950 text-white"
-          : "bg-gray-100 text-gray-800"
-        }
+          ? "bg-gradient-to-b from-zinc-900 to-black text-white"
+          : "bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800"}
       `}
     >
-
       {/* TOP */}
+      <div className="px-6 md:px-16 py-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
 
-      <div
-        className="
-          flex
-          flex-col
-          sm:grid
-          grid-cols-[3fr_1fr_1fr]
-          gap-12
-          px-6
-          md:px-16
-          py-16
-          text-sm
-        "
-      >
-
-        {/* LEFT */}
+        {/* BRAND */}
         <div>
-          <Link to={"/"}>
-            <div className="flex flex-col leading-tight">
-              <span className="text-2xl font-bold tracking-widest">
-                V<span className="text-amber-400">_</span>Shop
-              </span>
-              <span className="text-[9px] tracking-[0.3em] opacity-60 uppercase">
-                Curated Fashion
-              </span>
-            </div>
+          <Link to="/">
+            <h1 className="text-3xl font-bold tracking-widest mb-2">
+              V<span className="text-amber-400">_</span>Shop
+            </h1>
           </Link>
 
-          <p
-            className={`
-              w-full md:w-2/3 pt-3
-              ${darkMode
-                ? "text-zinc-400"
-                : "text-gray-600"
-              }
-            `}
-          >
-            Discover the best fashion collections with premium quality
-            and modern design. We bring you the latest trends with the
-            best prices.
+          <p className={`text-sm leading-relaxed ${darkMode ? "text-zinc-400" : "text-gray-600"
+            }`}>
+            Elevate your style with curated fashion. Premium quality,
+            modern trends, and unbeatable prices.
           </p>
-        </div>
 
+          {/* SOCIAL ICONS */}
+          <div className="flex gap-4 mt-5 text-xl">
+            <span className="hover:text-amber-400 cursor-pointer">🌐</span>
+            <span className="hover:text-amber-400 cursor-pointer">📸</span>
+            <span className="hover:text-amber-400 cursor-pointer">🐦</span>
+          </div>
+        </div>
 
         {/* COMPANY */}
         <div>
-          <p className="text-lg font-semibold mb-5 tracking-wide">
-            COMPANY
-          </p>
-
-          <div
-            className={`flex flex-col gap-2 ${darkMode ? "text-zinc-400" : "text-gray-600"
-              }`}
-          >
-            <Link
-              to={"/"}
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              Home
-            </Link>
-
-            <Link
-              to=""
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              About Us
-            </Link>
-
-            <Link
-              to=""
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              Delivery
-            </Link>
-
-            <Link
-              to=""
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              Privacy Policy
-            </Link>
-          </div>
+          <p className="text-lg font-semibold mb-4">Company</p>
+          <ul className={`space-y-2 ${darkMode ? "text-zinc-400" : "text-gray-600"
+            }`}>
+            <li><Link to="/" className="hover:text-amber-400">Home</Link></li>
+            <li><Link to="/about" className="hover:text-amber-400">About</Link></li>
+            <li><Link to="/collection" className="hover:text-amber-400">Shop</Link></li>
+            <li><Link to="/career" className="hover:text-amber-400">Careers</Link></li>
+          </ul>
         </div>
 
+        {/* SUPPORT */}
+        <div>
+          <p className="text-lg font-semibold mb-4">Support</p>
+          <ul className={`space-y-2 ${darkMode ? "text-zinc-400" : "text-gray-600"
+            }`}>
+
+            <li><Link className="hover:text-amber-400 cursor-pointer" to="/help">Help Center</Link></li>
+            <li><Link className="hover:text-amber-400 cursor-pointer" to="/shipping">Shipping</Link></li>
+            <li><Link className="hover:text-amber-400 cursor-pointer" to="/returns">Returns</Link></li>
+            <li><Link className="hover:text-amber-400 cursor-pointer" to="/privacy">Privacy Policy</Link></li>
+          </ul>
+        </div>
 
         {/* CONTACT */}
         <div>
-          <p className="text-lg font-semibold mb-5 tracking-wide">
-            GET IN TOUCH
-          </p>
+          <p className="text-lg font-semibold mb-4">Contact</p>
 
-          <div
-            className={`flex flex-col gap-2 ${darkMode ? "text-zinc-400" : "text-gray-600"
-              }`}
-          >
-            <a
-              href="tel:+916386177635"
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              +91-6386177635
-            </a>
+          <div className={`space-y-2 ${darkMode ? "text-zinc-400" : "text-gray-600"
+            }`}>
+            <p className="hover:text-amber-400 cursor-pointer">
+              📞 +91-6386177635
+            </p>
+            <p className="hover:text-amber-400 cursor-pointer">
+              📧 vineetyadav8429@gmail.com
+            </p>
+            <p className="hover:text-amber-400 cursor-pointer">
+              📍 India
+            </p>
+          </div>
 
-            <a
-              href="mailto:vineetyadav8429@gmail.com"
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              vineetyadav8429@gmail.com
-            </a>
-
-            <Link
-              to="/support"
-              className="hover:text-amber-500 cursor-pointer"
-            >
-              Support available 24/7
-            </Link>
+          {/* NEWSLETTER */}
+          <div className="mt-5">
+            <input
+              type="email"
+              placeholder="Subscribe..."
+              className={`
+                w-full px-3 py-2 text-sm rounded-md outline-none
+                ${darkMode
+                  ? "bg-zinc-800 text-white border border-zinc-700"
+                  : "bg-white border border-gray-300"}
+              `}
+            />
           </div>
         </div>
 
       </div>
 
-
       {/* BOTTOM */}
-
-      <div
-        className={`
-          border-t
-          text-center
-          text-sm
-          py-5
-          ${darkMode
-            ? "border-zinc-800 text-zinc-400"
-            : "border-gray-300 text-gray-600"
-          }
-        `}
-      >
-        Copyright 2026 © V_Shop.com — All Rights Reserved.
+      <div className={`
+        border-t text-center text-sm py-4
+        ${darkMode
+          ? "border-zinc-800 text-zinc-400"
+          : "border-gray-300 text-gray-600"}
+      `}>
+        © 2026 V_Shop — Made with ❤️ by Vineet
       </div>
-
     </div>
   );
 };

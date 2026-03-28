@@ -81,7 +81,7 @@ const Collection = () => {
 
   return (
     <div
-      className={`flex flex-col sm:flex-row gap-6 sm:gap-10 pt-10 px-4 sm:px-6 border-t transition-colors duration-300 ${
+      className={`flex flex-col sm:flex-row gap-6 sm:gap-10 py-10 px-4 sm:px-6 border-t transition-colors duration-300 ${
         darkMode
           ? "bg-zinc-950 text-white border-zinc-800"
           : "bg-gray-100 text-gray-900 border-gray-300"
@@ -161,7 +161,7 @@ const Collection = () => {
       {/* RIGHT SIDE */}
       <div className="flex-1">
 
-        <div className="flex justify-between items-center mb-5">
+        <div className="flex justify-between items-center text-3xl mb-5">
 
           <Title text1={"ALL"} text2={"COLLECTIONS"} />
 
