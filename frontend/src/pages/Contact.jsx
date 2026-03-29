@@ -9,6 +9,7 @@ const Contact = () => {
   const { darkMode } = useContext(ShopContext);
   const navigate = useNavigate();
 
+  
   return (
     <div
       className={`px-4 sm:px-6 transition-colors duration-300 ${

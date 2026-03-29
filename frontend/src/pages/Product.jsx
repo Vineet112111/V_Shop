@@ -22,6 +22,7 @@ const Product = () => {
     }
   }, [productId, products]);
 
+  
   return productData ? (
     <div
       className={`py-10 px-4 sm:px-6 transition

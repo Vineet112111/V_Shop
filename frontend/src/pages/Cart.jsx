@@ -146,6 +146,7 @@ const Cart = () => {
         <div className="flex justify-end my-16">
           <div className="w-full sm:w-[420px] space-y-4">
 
+
             <div
               className={`p-5 rounded-md border
                 ${

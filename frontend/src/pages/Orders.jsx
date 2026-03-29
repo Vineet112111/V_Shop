@@ -46,7 +46,7 @@ const Orders = () => {
 
   return (
     <div
-      className={`border-t pt-12 px-4 sm:px-6 transition-colors duration-300 ${
+      className={`border-t py-12 px-4 sm:px-6 transition-colors duration-300 ${
         darkMode
           ? "bg-zinc-950 text-white border-zinc-800"
           : "bg-gray-100 text-gray-900 border-gray-300"

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { assets } from "../assets/assets";
 import Title from "./Title";
 import { ShopContext } from "../context/ShopContext";
@@ -39,7 +39,6 @@ const Hero = () => {
 
           {/* main title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
-
             Latest  
             <span className="text-amber-500"> Arrivals</span>
 

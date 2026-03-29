@@ -5,7 +5,6 @@ import ProductItem from "./ProductItem";
 
 const LatestCollection = () => {
   const { products, darkMode } = useContext(ShopContext);
-
   const [latestProduct, setLatestProduct] = useState([]);
 
   useEffect(() => {

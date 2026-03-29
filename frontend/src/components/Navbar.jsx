@@ -16,7 +16,7 @@ const Navbar = () => {
     setCartItems,
     darkMode,
     setDarkMode,
-  } = useContext(ShopContext);
+  }=useContext(ShopContext);
 
   const logout = () => {
     navigate("/login");

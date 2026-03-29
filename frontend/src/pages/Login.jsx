@@ -15,6 +15,7 @@ const Login = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    
 
     try {
       if (currentState === "Sign Up") {

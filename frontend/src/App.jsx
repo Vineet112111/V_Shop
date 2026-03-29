@@ -33,7 +33,6 @@ const App = () => {
       <div>
         <Navbar />
         <SearchBar />
-
       </div>
 
       {/* ROUTES FULL WIDTH */}

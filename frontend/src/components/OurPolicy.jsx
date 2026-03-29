@@ -28,6 +28,7 @@ const OurPolicy = () => {
       `}
     >
 
+
       {/* 1 */}
       <div
         className={`

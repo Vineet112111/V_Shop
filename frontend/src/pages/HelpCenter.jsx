@@ -12,6 +12,7 @@ const HelpCenter = () => {
     { q: "Can I cancel my order?", a: "Yes, before it is shipped." },
   ];
 
+  
   return (
     <div className={`min-h-screen px-6 py-12 ${darkMode ? "bg-zinc-950 text-white" : "bg-white text-gray-800"}`}>
       <div className="text-center text-3xl mb-10">

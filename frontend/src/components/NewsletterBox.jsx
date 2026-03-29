@@ -91,6 +91,7 @@ const NewsletterBox = () => {
           SUBSCRIBE
         </button>
 
+
       </form>
     </div>
   );

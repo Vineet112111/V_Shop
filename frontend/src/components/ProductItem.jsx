@@ -34,7 +34,6 @@ const ProductItem = ({ id, image, name, price }) => {
         <p className="text-sm font-medium">
           ${price}
         </p>
-
       </div>
 
     </Link>

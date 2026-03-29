@@ -22,6 +22,7 @@ const Title = ({ text1, text2 }) => {
         </span>
       </p>
 
+
       <p
         className={`w-8 sm:w-12 h-[1px] sm:h-[2px] ${
           darkMode ? "bg-zinc-600" : "bg-gray-700"
