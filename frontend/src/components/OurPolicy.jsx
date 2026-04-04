@@ -6,6 +6,7 @@ const OurPolicy = () => {
 
   const { darkMode } = useContext(ShopContext);
 
+  
   return (
     <div
       className={`

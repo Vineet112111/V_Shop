@@ -25,7 +25,6 @@ const ProductItem = ({ id, image, name, price }) => {
             alt=""
             className="w-full h-full object-center"
           />
-
         </div>
 
         {/* TEXT */}

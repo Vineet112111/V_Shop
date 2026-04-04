@@ -67,6 +67,7 @@ const LatestCollection = () => {
           }
         `}
       >
+        
 
         <ProductItem
           id={item._id}

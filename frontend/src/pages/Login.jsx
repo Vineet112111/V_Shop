@@ -72,6 +72,7 @@ const Login = () => {
               : "bg-white border-gray-200"
           }`}
       >
+        
         {/* TITLE */}
         <div className="text-center">
           <h2 className="text-2xl font-semibold tracking-wide">

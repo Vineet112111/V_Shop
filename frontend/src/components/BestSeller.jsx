@@ -80,4 +80,5 @@ const BestSeller = () => {
   );
 };
 
+
 export default BestSeller;

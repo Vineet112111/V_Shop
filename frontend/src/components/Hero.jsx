@@ -54,6 +54,7 @@ const Hero = () => {
             Designed for comfort, style, and confidence.
           </p>
 
+
           {/* button */}
           <button
             onClick={() => navigate("/collection")}

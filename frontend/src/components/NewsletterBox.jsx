@@ -9,6 +9,7 @@ const NewsletterBox = () => {
     e.preventDefault();
   };
 
+  
   return (
     <div
       className={`text-center py-12 px-4 transition-colors duration-300 ${
