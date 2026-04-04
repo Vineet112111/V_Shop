@@ -7,7 +7,9 @@ import userModel from "../models/userModel.js";
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET);
 };
+
 //Route for user login
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;

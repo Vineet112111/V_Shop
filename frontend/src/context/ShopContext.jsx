@@ -104,7 +104,6 @@ const ShopContextProvider = (props) => {
         } catch (e) {}
       }
     }
-
     return totalAmount;
   };
 
@@ -147,7 +146,11 @@ const ShopContextProvider = (props) => {
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     );
   });
- 
+  
+  useEffect(() => {
+    getProductsData();
+  }, []);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -158,9 +161,6 @@ const ShopContextProvider = (props) => {
     }
   }, [darkMode]);
 
-  useEffect(() => {
-    getProductsData();
-  }, []);
 
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
@@ -192,7 +192,9 @@ const ShopContextProvider = (props) => {
   };
 
   return (
-    <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
+    <ShopContext.Provider value={value}>
+      {props.children}
+    </ShopContext.Provider>
   );
 };
 
